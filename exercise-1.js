@@ -3,9 +3,10 @@
 // javascript que
 // proporcionamos nosotros es el que contiene la solución propuesta) para crear un juego de memoria con
 // los datos proporcionados por el siguiente array:
+document.addEventListener('DOMContentLoaded', function () { 
+  //  const grid = document.querySelector('.b-grid');  const loadAnimation = function () {    const loadBar = document.createElement('div');    loadBar.classList.add('load-bar');    grid.appendChild(loadBar);    loadBar.style.width = '0%';    loadBar.style.transition = 'width 0.5s';    setTimeout(function () {      loadBar.style.width = '100%';    }, 3000);  };  loadAnimation();
 
-
-let cardArray = [
+let cardArrayOrderer = [
   {
     id: 1,
     name: "earth",
@@ -95,6 +96,7 @@ let cardArray = [
 // Si has cumplido todas las condiciones...Enhorabuena! tienes un juego de memoría bastante resultón! Además si te
 // interesa subir la dificultad no tienes más que hacer el array más grande y meter más imagenes...¿te atreves? :D
 
+const cardArray=cardArrayOrderer.sort(()=>Math.random()-0.5) //ordenamos los elementos del arreglo aleatoriamente
 
 const tableroDiv=document.querySelector(`div[data-function="grid"]`);
 tableroDiv.setAttribute("class", "b-grid");
@@ -103,6 +105,10 @@ let carta1= null
 let score=0
 const scoreH3=document.querySelector(`span[data-function="score"]`);
 scoreH3.textContent=score
+
+let attempts=0
+const attemptsH3=document.querySelector(`span[data-function="attempts"]`);
+attemptsH3.textContent=attempts
 
 for (let i = 0; i < cardArray.length; i++) {
     const cardDiv=document.createElement('div');
@@ -114,6 +120,8 @@ for (let i = 0; i < cardArray.length; i++) {
     cardDiv.appendChild(cardImg); 
 
     cardImg.addEventListener("click", function(){
+      attempts++
+      attemptsH3.textContent=Math.floor(attempts/2)
 // Verificar si la carta ya ha sido validada o si se hizo clic en la misma carta dos veces.
 if (cardImg.getAttribute("src") === "public/exercise-1/tick.svg" || carta1 === cardImg) {
   return; // La jugada no es válida.
@@ -148,4 +156,4 @@ if (!carta1) {
   }
 );
 }       
-
+})
